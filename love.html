@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+
+<title>Happy Birthday ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    background: black;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    text-align: center;
+    overflow-x: hidden;
+}
+
+/* Background image */
+body::before {
+    content: "";
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: url("https://i.imgur.com/6Iej2c3.png") center/cover;
+    opacity: 0.35;
+    z-index: -2;
+}
+
+/* 🎆 Fireworks Canvas */
+#fireworks {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Heading */
+h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 55px;
+    color: #ff4d6d;
+    text-shadow: 0 0 10px #ff4d6d, 0 0 20px #ff99aa;
+}
+
+.subtitle {
+    color: #ffb3c1;
+}
+
+/* Photo */
+.photo {
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    border: 4px solid #ff4d6d;
+    object-fit: cover;
+    margin: 20px;
+    box-shadow: 0 0 25px #ff4d6d;
+}
+
+/* Code box */
+.code-box {
+    max-width: 850px;
+    margin: auto;
+    background: rgba(0,0,0,0.7);
+    border: 1px solid #ff4d6d;
+    border-radius: 15px;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    text-align: left;
+}
+
+.code-box p {
+    font-size: 14px;
+}
+
+.keyword { color: #00ffd5; }
+.function { color: #ffd166; }
+
+/* Button */
+button {
+    margin-top: 20px;
+    padding: 12px 25px;
+    border-radius: 25px;
+    border: none;
+    background: #ff4d6d;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 0 15px #ff4d6d;
+}
+
+/* Surprise */
+.surprise {
+    display: none;
+    max-width: 600px;
+    margin: 20px auto;
+    background: rgba(0,0,0,0.7);
+    border: 1px solid #ff4d6d;
+    border-radius: 15px;
+    padding: 20px;
+    color: #ffd1dc;
+    position: relative;
+}
+
+/* 🎀 Bow */
+.surprise::before {
+    content: "🎀";
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 40px;
+}
+
+/* Music button */
+.music {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    border: 1px solid #ff4d6d;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* Footer */
+.footer {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    border: 1px dashed #ff4d6d;
+    padding: 10px;
+    border-radius: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎆 Fireworks -->
+<canvas id="fireworks"></canvas>
+
+<h1>🎂 Happy Birthday My Husband ❤️</h1>
+<p class="subtitle">💖 You are my forever and always 💖</p>
+
+<img src="myhusband.jpg" class="photo">
+
+<div class="code-box">
+<p>💻 You are the <span class="function">main()</span> function of my life ❤️</p>
+<p>💻 You are my <span class="keyword">pointer</span> 👉❤️</p>
+
+<p>💻 My love is like <span class="function">while(true)</span> ♾️</p>
+<p>💻 Our love is <span class="keyword">recursion</span> 💞</p>
+
+<p>💻 You are my <span class="function">cout</span> 💖</p>
+<p>💻 You are my <span class="keyword">constant</span> 💕</p>
+
+<p>💻 Life won’t <span class="function">compile</span> without you 😢</p>
+<p>💻 I will always <span class="keyword">catch</span> you ❤️</p>
+
+<p>💻 You are my <span class="function">function()</span> 💕</p>
+<p>💻 No bugs, only love 😊</p>
+</div>
+
+<button onclick="showSurprise()">🎁 Click for a Surprise 🎁</button>
+
+<div class="surprise" id="box">
+<h2>💖 Surprise 💖</h2>
+<p>
+No matter what life compiles for us,<br>
+I know our love will always run perfectly ❤️<br><br>
+
+Thank you for being my exception handler,<br>
+my best friend, my love, my everything 💕<br><br>
+
+<b>I Love You Forever & Always ❤️</b>
+</p>
+</div>
+
+<div class="music" onclick="playMusic()">🎵 Play Our Song</div>
+<audio id="song" src="song.mp3"></audio>
+
+<div class="footer">Made with ❤️ just for you</div>
+
+<script>
+function showSurprise() {
+    document.getElementById("box").style.display = "block";
+}
+
+function playMusic() {
+    document.getElementById("song").play();
+}
+
+/* 🎆 Firecracker Animation */
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+function createFirework() {
+    let x = Math.random() * canvas.width;
+    let y = Math.random() * canvas.height / 2;
+
+    for (let i = 0; i < 60; i++) {
+        particles.push({
+            x: x,
+            y: y,
+            angle: Math.random() * 2 * Math.PI,
+            speed: Math.random() * 5 + 2,
+            life: 100
+        });
+    }
+}
+
+function animate() {
+    ctx.fillStyle = "rgba(0,0,0,0.2)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach((p, i) => {
+        p.x += Math.cos(p.angle) * p.speed;
+        p.y += Math.sin(p.angle) * p.speed;
+        p.life--;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+        ctx.fillStyle = "#ff4d6d";
+        ctx.fill();
+
+        if (p.life <= 0) {
+            particles.splice(i, 1);
+        }
+    });
+
+    requestAnimationFrame(animate);
+}
+
+setInterval(createFirework, 800);
+animate();
+
+window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+</script>
+
+</body>
+</html>
